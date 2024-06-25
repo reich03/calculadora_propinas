@@ -1,18 +1,20 @@
 import { MenuItem } from "../types";
-const MenuItems = ({
-  producto,
-  addItem,
-}: {
+import { Dispatch } from "react";
+
+type menuProps = {
   producto: MenuItem;
-  addItem: (product:MenuItem) => void;
-}) => {
+  dispatch: React.DispatchWithoutAction;
+};
+const MenuItems = ({ producto, dispatch }: menuProps) => {
   const { name, price } = producto;
-//   console.log(producto);
+  //   console.log(producto);
   return (
     <>
       <button
-        className="border-2 border-sky-400 p-3 w-full flex  rounded-md justify-between hover:bg-sky-200"
-        onClick={() => addItem(producto)}
+        className="flex justify-between w-full p-3 border-2 rounded-md border-sky-400 hover:bg-sky-200"
+        onClick={() =>
+          dispatch({ type: "add-to-order", payload: { item: producto } })
+        }
       >
         <span>{name}</span>
         <span>${price}</span>

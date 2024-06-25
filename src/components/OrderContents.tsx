@@ -1,17 +1,11 @@
 import { OrderItem } from "../types";
 import { formatCurrency } from "../helpers";
-
-const OrderContents = ({
-  order,
-  deleteItem,
-}: {
-  order: OrderItem[];
-  deleteItem: (product: OrderItem) => void;
-}) => {
+type orderProps = { order: OrderItem[]; dispatch: React.DispatchWithoutAction };
+const OrderContents = ({ order, dispatch }: orderProps) => {
   return (
     <div>
-      <h2 className="font-black text-4xl">Consumo</h2>
-      <div className="space-y-3 mt-10">
+      <h2 className="text-4xl font-black">Consumo</h2>
+      <div className="mt-10 space-y-3">
         {order.map((item) => (
           <div
             key={item.id}
@@ -29,8 +23,10 @@ const OrderContents = ({
             </div>
             <div className="flex items-center">
               <button
-                className="bg-red-600 h-8 w-8 rounded-full text-white font-black"
-                onClick={() => deleteItem(item)}
+                className="w-8 h-8 font-black text-white bg-red-600 rounded-full"
+                onClick={() =>
+                  dispatch({ type: "delete-to-order", payload: { item } })
+                }
               >
                 X
               </button>
